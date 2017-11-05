@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+
+<!--
+	Това е демо-шаблон на първото домашно задание по ОКГ.
+	Вижте коментарите във файла, за да разберете къде да променяте.
+	
+	Разделяне/слепване на двете части на йероглифа:
+		клик с ляв бутон или клавиш "интервал"
+		
+	Показване/скриване на рамката:
+		клик с десен бутон или някой друг клавиш
+-->
+	
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="kanji.js"></script>
+		<script src="ThreeCSG.js"> </script>
+	</head>
+	
+	<body onload="main()">
+		<!-- В тага h1 си напишете факултетния номер, групата в Мудъл и двете си имена-->
+		<h1>ф.н. 99999 &ndash; група 9 &ndash; Малкоимен Фамилиев</h1>
+
+		<!-- В този script таг напишете кода си за създаване на
+		йероглифа в две половини, разделени с диагонална черта
+		от горе-ляво до долу-дясно. Кодът по-долу е само примерен.
+		Махнете го и сложете вашия код на негово място. -->
+		<script>
+			// Елементите, които принадлежат на горната-дясна половина
+			// на йероглифа ги добавете към обекта PART1, а елементите
+			// на долната-лява половина - в PART2.
+			
+			// Кодът по-надолу създава две стъпаловидни половини на
+			// плочка; целта е да се покаже как да използвате двата
+			// обекта PART1 и PART2 (те са създадени в kanji.js и
+			// пак от там се манипулират, затова не им променяйте
+			// имената).
+			
+			// Създаваме си материал за елементите - добре е да не
+			// е прекалено ярък или тъмен, за да се виждат добре нещата.
+			var material = new THREE.MeshPhongMaterial({color:'gray',shininess:100});
+			
+			// Дефинираме елементите на горната-дясна половина (с имена по наш избор).
+			var geometry = new THREE.BoxGeometry(10.9, 1.5, 10);
+			var line1 = new THREE.Mesh(geometry, material);
+			line1.position.set(3.6, 4.15, 0);
+
+			var shape = new THREE.Shape();
+			shape.moveTo(4, 10);
+			shape.bezierCurveTo(5, -10, 8, -15, 9.7, -5.3);
+			shape.lineTo(8.3, -4.7);
+			shape.bezierCurveTo( 7.8, -10.6, 6.9, -8.4, 5.6, 10);
+			shape.lineTo(4, 10);
+	
+			var extrudeSettings = {
+			    curveSegments: 120,
+				steps: 200,
+				amount: 10,
+				bevelEnabled: false
+			};
+
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line2 = new THREE.Mesh( geometry, material ) ;
+			line2.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(5.9, 8.2);
+			shape.quadraticCurveTo(7.3, 7, 8, 5.3);
+			shape.lineTo(9.3, 6);
+			shape.quadraticCurveTo(8.7, 7.8, 7, 9);
+			shape.lineTo(5.9, 8.2);
+			
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line3 = new THREE.Mesh( geometry, material );
+			line3.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-8.9, 8.9);
+			shape.lineTo(-8, 8);
+			shape.lineTo(-2.5, 8);
+			shape.lineTo(-2.5, 9.5);
+			shape.lineTo(-8.9, 9.5);
+			shape.lineTo(-8.9, 8.9);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line4 = new THREE.Mesh(geometry, material);
+			line4.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-3.6, 3.6);
+			shape.lineTo(-2.5, 2.5);
+			shape.lineTo(-2.5, 3.6);
+			shape.lineTo(-3.6, 3.6);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line5 = new THREE.Mesh(geometry, material);
+			line5.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-0.2, 0.2);
+			shape.lineTo(1.9, -1.9);
+			shape.lineTo(1.9, -1);
+			shape.lineTo(4, -1);
+			shape.lineTo(4, 0.2);
+			shape.lineTo(-0.2, 0.2);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line6 = new THREE.Mesh(geometry, material);
+			line6.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-6.6, 6.6);
+			shape.lineTo(-5, 5);
+			shape.lineTo(-1.8, 5);
+			shape.lineTo(-1.8, 6.6);
+			shape.lineTo(-6.6, 6.6);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line7 = new THREE.Mesh(geometry, material);
+			line7.position.z = -5;
+			
+			// Добавяме ги към обекта PART1 (името е фиксирано).
+			part1.add( line1, line2, line3, line4, line5, line6, line7 );
+			
+			// Дефинираме елементите на долната-лява половина (с имена по наш избор).
+			
+			var geometry = new THREE.BoxGeometry(6.2, 7.2, 10);
+			var obj1 = new THREE.Mesh(geometry, material);
+			obj1.position.set(-5.8, -6.4, 0);
+			
+			var geometry = new THREE.BoxGeometry( 3.1, 2.75, 10 );
+			var sub1 = new THREE.Mesh(geometry, material);
+			sub1.position.set(-5.8, -5.7, 0);
+			
+			var geometry = new THREE.BoxGeometry( 3.1, 1.6, 10 );
+			var sub2 = new THREE.Mesh(geometry, material);
+			sub2.position.set(-5.8, -9.2, 0);
+
+			var bspObj1 = new ThreeBSP(obj1);
+			var bspSub1 = new ThreeBSP(sub1);
+			var bspSub2 = new ThreeBSP(sub2);
+			var sub = bspSub1.union(bspSub2);
+			var bspResult = bspObj1.subtract(sub);
+			
+			var objRes = bspResult.toMesh( new THREE.MeshPhongMaterial({color:'gray',shininess:100}) );
+			
+			var geometry = new THREE.BoxGeometry(6.4, 1.5, 10);
+			var obj2 = new THREE.Mesh(geometry, material);
+			obj2.position.set(-5.8, -0.2, 0);
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-3.6, 3.6);
+			shape.lineTo(-8.9, 3.6);
+			shape.lineTo(-8.9, 2);
+			shape.lineTo(-2.5, 2);
+			shape.lineTo(-2.5, 2.5);
+			shape.lineTo(-3.6, 3.6);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line3 = new THREE.Mesh(geometry, material);
+			line3.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-0.2, 0.2);
+			shape.lineTo(-1.8, 0.2);
+			shape.lineTo(-1.8, -1);
+			shape.lineTo(0.3, -1);
+			shape.lineTo(0.3, -6.3);
+			shape.lineTo(-2.5, -7.3);
+			shape.lineTo(-1.6, -8.7);
+			shape.lineTo(4.8, -6.4);
+			shape.lineTo(5, -5.1);
+			shape.lineTo(1.9, -5.9);
+			shape.lineTo(1.9, -1.9);
+			shape.lineTo(-0.2, 0.2);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line4 = new THREE.Mesh(geometry, material);
+			line4.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-10, 6.6);
+			shape.lineTo(-10, 5);
+			shape.lineTo(-5, 5);
+			shape.lineTo(-6.6, 6.6);
+			shape.lineTo(-10, 6.6);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line5 = new THREE.Mesh(geometry, material);
+			line5.position.z = -5;
+			
+			var shape = new THREE.Shape();
+			shape.moveTo(-8.9, 8.9);
+			shape.lineTo(-8.9, 8);
+			shape.lineTo(-8, 8);
+			shape.lineTo(-8.9, 8.9);
+			var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			var line6 = new THREE.Mesh(geometry, material);
+			line6.position.z = -5;
+			
+			
+			// Добавяме ги към обекта PART2 (името е фиксирано).
+			part2.add( objRes, obj2, line3, line4, line5, line6 );
+
+			// Файлът kanji.js се грижи да нарисува земята и двете половини
+			// на йероглифа; грижи се и раздалечаването и приближаването на
+			// тези половини; показване/скриване на рамката; звукови ефекти
+			// и потрепване. Това е само за ваша информация, ако евентуално
+			// се чудете къде се прави магията. Това май е най-подравненият
+			// коментар досега -- както отляво, така и отдясно е подравнен.
+		</script>
+	</body>
+</html>
